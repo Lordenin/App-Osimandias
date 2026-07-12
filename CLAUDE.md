@@ -44,10 +44,21 @@ npm run lint      # ESLint
 ## Estrutura de pastas
 
 ```
-app/                 # rotas (App Router)
-components/          # componentes React reutilizáveis
-lib/                 # helpers, cliente Supabase, formatação, etc.
-supabase/migrations/ # migrations SQL versionadas
+app/
+  (app)/              # rotas autenticadas: layout com header + bottom nav
+    page.tsx           # Novo lançamento (Fase 4)
+    dashboard/          # Fase 7
+    lancamentos/         # Fase 5
+    categorias/           # Fase 6
+    actions.ts          # Server Action de logout
+  login/               # tela de login + "esqueci minha senha"
+  atualizar-senha/     # definir nova senha (fluxo de recuperação)
+  auth/callback/        # troca o "code" do e-mail por sessão (Supabase)
+  icon.tsx             # favicon gerado via next/og
+components/            # componentes React reutilizáveis (ex: BottomNav)
+lib/supabase/           # clientes Supabase (browser, server, proxy)
+supabase/migrations/    # migrations SQL versionadas
+proxy.ts                # substitui "middleware.ts" no Next 16; protege rotas
 ```
 
 ## Modelo de dados (Supabase / Postgres)
@@ -116,7 +127,13 @@ Ver `PROGRESS.md` para o detalhamento das fases. Resumo:
   seed de categorias). Instruções de aplicação em `supabase/README.md`.
   Ainda não aplicado no projeto Supabase real — depende do usuário criar o
   projeto e rodar os passos do README.
-- ⬜ Fase 3 — Auth + layout base + navegação
+- ✅ **Fase 3 — Auth + layout base**: login (e-mail/senha) e recuperação de
+  senha via Supabase Auth, `proxy.ts` protegendo rotas (redireciona para
+  `/login` sem sessão), layout `(app)` com header + botão sair + bottom nav
+  fixa (Novo/Dashboard/Lançamentos/Categorias — todas placeholder ainda).
+  Requer `NEXT_PUBLIC_SUPABASE_URL`/`NEXT_PUBLIC_SUPABASE_ANON_KEY` reais em
+  `.env.local` para funcionar (sem eles a app derruba a request de propósito).
+- ⬜ Fase 4 — Tela de Novo Lançamento
 - ⬜ Fase 4 — Tela de Novo Lançamento
 - ⬜ Fase 5 — Tela de Lançamentos
 - ⬜ Fase 6 — Categorias e orçamentos

@@ -18,11 +18,13 @@
 - [ ] **Pendente do usuário**: aplicar as migrations no projeto Supabase real e confirmar
 
 ## Fase 3 — Auth + layout base
-- [ ] Login (e-mail/senha) via Supabase Auth + "esqueci minha senha"
-- [ ] Guard de sessão
-- [ ] Layout raiz com barra inferior fixa (Novo / Dashboard / Lançamentos / Categorias)
-- [ ] Dark mode via `prefers-color-scheme`
-- [ ] Commit: "Auth e navegação base"
+- [x] Login (e-mail/senha) via Supabase Auth + "esqueci minha senha"
+- [x] Guard de sessão (`proxy.ts`, redireciona para `/login` sem sessão)
+- [x] Layout raiz com barra inferior fixa (Novo / Dashboard / Lançamentos / Categorias)
+- [x] Dark mode via `prefers-color-scheme`
+- [x] Commit: "Auth e navegação base"
+- [ ] **Pendente do usuário**: preencher `.env.local` com as chaves reais do
+      Supabase (Fase 2) e validar o login com os dois usuários de verdade
 
 ## Fase 4 — Novo Lançamento (tela principal)
 - [ ] Teclado numérico grande, valor em destaque, toggle Entrada/Saída
