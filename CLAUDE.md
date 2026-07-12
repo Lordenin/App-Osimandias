@@ -47,10 +47,12 @@ npm run lint      # ESLint
 app/
   (app)/              # rotas autenticadas: layout com header + bottom nav
     page.tsx           # Novo lançamento (Fase 4)
+    actions.ts          # Server Actions: sair, criarLancamento
     dashboard/          # Fase 7
-    lancamentos/         # Fase 5
+    lancamentos/         # lista, filtros, editar, excluir, marcar como pago
+      actions.ts          # Server Actions: excluir, marcarComoPago, atualizar
+      [id]/editar/          # tela de edição
     categorias/           # Fase 6
-    actions.ts          # Server Action de logout
   login/               # tela de login + "esqueci minha senha"
   atualizar-senha/     # definir nova senha (fluxo de recuperação)
   auth/callback/        # troca o "code" do e-mail por sessão (Supabase)
@@ -132,7 +134,7 @@ Ver `PROGRESS.md` para o detalhamento das fases. Resumo:
 - ✅ **Fase 3 — Auth + layout base**: login (e-mail/senha) e recuperação de
   senha via Supabase Auth, `proxy.ts` protegendo rotas (redireciona para
   `/login` sem sessão), layout `(app)` com header + botão sair + bottom nav
-  fixa (Novo/Dashboard/Lançamentos/Categorias — todas placeholder ainda).
+  fixa (Novo/Dashboard/Lançamentos/Categorias).
   Requer `NEXT_PUBLIC_SUPABASE_URL`/`NEXT_PUBLIC_SUPABASE_ANON_KEY` reais em
   `.env.local` para funcionar (sem eles a app derruba a request de propósito).
 - ✅ **Fase 4 — Novo Lançamento**: `app/(app)/page.tsx` busca as categorias do
@@ -142,7 +144,15 @@ Ver `PROGRESS.md` para o detalhamento das fases. Resumo:
   descrição opcional, switch "é futuro/pendente" revelando a data prevista.
   Server Action `criarLancamento` em `app/(app)/actions.ts` grava no Supabase
   e o formulário reseta (via remount por `key`) após salvar com sucesso.
-- ⬜ Fase 5 — Tela de Lançamentos
+- ✅ **Fase 5 — Tela de Lançamentos**: `app/(app)/lancamentos/page.tsx` lê
+  `mes`/`tipo`/`categoria` da URL (`searchParams`), busca no Supabase com a
+  categoria embutida via FK e navegação/filtro feitos por
+  `components/FiltrosLancamentos.tsx` (Client, atualiza a URL). Cada
+  lançamento é um card em `components/ListaLancamentos.tsx` com excluir
+  (confirmação nativa do navegador) e, se pendente, "marcar como pago".
+  Editar abre `/lancamentos/[id]/editar`, que reaproveita `GradeCategorias`
+  (extraído do formulário de novo lançamento) num formulário pré-preenchido.
+  Server Actions em `app/(app)/lancamentos/actions.ts`.
 - ⬜ Fase 6 — Categorias e orçamentos
 - ⬜ Fase 7 — Dashboard e gráficos
 - ⬜ Fase 8 — PWA + deploy na Vercel

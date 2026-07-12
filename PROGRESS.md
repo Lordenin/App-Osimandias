@@ -36,10 +36,13 @@
       Supabase real (Fases 2 e 3 precisam estar aplicadas com `.env.local`)
 
 ## Fase 5 — Lançamentos (lista)
-- [ ] Lista do mês, navegação entre meses, filtro por tipo/categoria
-- [ ] Editar, excluir (com confirmação)
-- [ ] "Marcar como pago" (pendente → realizado)
-- [ ] Commit: "Tela de lançamentos"
+- [x] Lista do mês, navegação entre meses, filtro por tipo/categoria
+- [x] Editar, excluir (com confirmação)
+- [x] "Marcar como pago" (pendente → realizado)
+- [x] Commit: "Tela de lançamentos"
+- [ ] **Pendente do usuário**: validar contra o Supabase real (a consulta usa
+      `categorias(nome, icone, cor)` embutido via FK — confirmar que volta
+      certo com dados de verdade)
 
 ## Fase 6 — Categorias e orçamentos
 - [ ] CRUD de categorias (nome, cor, emoji)

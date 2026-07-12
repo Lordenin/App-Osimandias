@@ -1,61 +1,52 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
-  criarLancamento,
-  type EstadoNovoLancamento,
-} from "@/app/(app)/actions";
+  atualizarLancamento,
+  type EstadoEditarLancamento,
+} from "@/app/(app)/lancamentos/actions";
 import { formatarMoeda } from "@/lib/format";
 import { GradeCategorias, type Categoria } from "@/components/GradeCategorias";
 
 const TECLAS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "00", "0", "⌫"];
-const estadoInicial: EstadoNovoLancamento = {};
+const estadoInicial: EstadoEditarLancamento = {};
 
-export function NovoLancamentoForm({
+type Lancamento = {
+  id: string;
+  tipo: "entrada" | "saida";
+  valor: number;
+  descricao: string | null;
+  categoria_id: string | null;
+  data_competencia: string;
+  status: "realizado" | "pendente";
+  data_prevista: string | null;
+};
+
+export function EditarLancamentoForm({
+  lancamento,
   categorias,
-  hoje,
 }: {
+  lancamento: Lancamento;
   categorias: Categoria[];
-  hoje: string;
 }) {
-  const [estado, acao, enviando] = useActionState(
-    criarLancamento,
-    estadoInicial,
+  const router = useRouter();
+  const acaoComId = atualizarLancamento.bind(null, lancamento.id);
+  const [estado, acao, enviando] = useActionState(acaoComId, estadoInicial);
+
+  const [tipo, setTipo] = useState<"entrada" | "saida">(lancamento.tipo);
+  const [digitos, setDigitos] = useState(
+    Math.round(lancamento.valor * 100).toString(),
+  );
+  const [categoriaId, setCategoriaId] = useState<string | null>(
+    lancamento.categoria_id,
+  );
+  const [data, setData] = useState(lancamento.data_competencia);
+  const [dataPrevista, setDataPrevista] = useState(
+    lancamento.data_prevista ?? lancamento.data_competencia,
   );
 
-  // Remonta os campos (e zera o formulário) sempre que um lançamento é
-  // salvo com sucesso, trocando a "key" — evita setState dentro de efeito.
-  return (
-    <Campos
-      key={estado.sucesso ?? 0}
-      categorias={categorias}
-      hoje={hoje}
-      acao={acao}
-      erro={estado.erro}
-      enviando={enviando}
-    />
-  );
-}
-
-function Campos({
-  categorias,
-  hoje,
-  acao,
-  erro,
-  enviando,
-}: {
-  categorias: Categoria[];
-  hoje: string;
-  acao: (formData: FormData) => void;
-  erro?: string;
-  enviando: boolean;
-}) {
-  const [tipo, setTipo] = useState<"entrada" | "saida">("saida");
-  const [digitos, setDigitos] = useState("");
-  const [categoriaId, setCategoriaId] = useState<string | null>(null);
-  const [pendente, setPendente] = useState(false);
-  const [dataPrevista, setDataPrevista] = useState(hoje);
-
+  const pendente = lancamento.status === "pendente";
   const valorCentavos = digitos === "" ? 0 : parseInt(digitos, 10);
   const categoriasFiltradas = categorias.filter((c) => c.tipo === tipo);
 
@@ -78,7 +69,6 @@ function Campos({
       <input type="hidden" name="valorCentavos" value={valorCentavos} />
       <input type="hidden" name="categoriaId" value={categoriaId ?? ""} />
       <input type="hidden" name="pendente" value={pendente ? "true" : "false"} />
-      <input type="hidden" name="hoje" value={hoje} />
       <input type="hidden" name="dataPrevista" value={dataPrevista} />
 
       <div className="flex rounded-lg border border-neutral-300 p-1 dark:border-neutral-700">
@@ -132,44 +122,47 @@ function Campos({
       <input
         type="text"
         name="descricao"
+        defaultValue={lancamento.descricao ?? ""}
         placeholder="Descrição (opcional)"
         className="rounded-lg border border-neutral-300 px-4 py-2.5 text-sm outline-none focus:border-neutral-900 dark:border-neutral-700 dark:focus:border-neutral-100"
       />
 
-      <label className="flex items-center justify-between text-sm">
-        <span>É futuro / pendente</span>
+      <div className="flex flex-col gap-1">
+        <label htmlFor="data" className="text-sm font-medium">
+          {pendente ? "Data prevista" : "Data"}
+        </label>
         <input
-          type="checkbox"
-          checked={pendente}
-          onChange={(e) => setPendente(e.target.checked)}
-          className="h-5 w-5"
+          id="data"
+          type="date"
+          name="data"
+          value={pendente ? dataPrevista : data}
+          onChange={(e) =>
+            pendente ? setDataPrevista(e.target.value) : setData(e.target.value)
+          }
+          className="rounded-lg border border-neutral-300 px-4 py-2.5 text-sm outline-none focus:border-neutral-900 dark:border-neutral-700 dark:focus:border-neutral-100"
         />
-      </label>
+      </div>
 
-      {pendente && (
-        <div className="flex flex-col gap-1">
-          <label htmlFor="data-prevista" className="text-sm font-medium">
-            Data prevista
-          </label>
-          <input
-            id="data-prevista"
-            type="date"
-            value={dataPrevista}
-            onChange={(e) => setDataPrevista(e.target.value)}
-            className="rounded-lg border border-neutral-300 px-4 py-2.5 text-sm outline-none focus:border-neutral-900 dark:border-neutral-700 dark:focus:border-neutral-100"
-          />
-        </div>
+      {estado.erro && (
+        <p className="text-sm text-red-600 dark:text-red-400">{estado.erro}</p>
       )}
 
-      {erro && <p className="text-sm text-red-600 dark:text-red-400">{erro}</p>}
-
-      <button
-        type="submit"
-        disabled={enviando || valorCentavos === 0 || !categoriaId}
-        className="mt-1 rounded-lg bg-neutral-900 py-3.5 text-base font-semibold text-white disabled:opacity-40 dark:bg-neutral-100 dark:text-neutral-900"
-      >
-        {enviando ? "Salvando…" : "Salvar"}
-      </button>
+      <div className="mt-1 flex gap-2">
+        <button
+          type="button"
+          onClick={() => router.push("/lancamentos")}
+          className="flex-1 rounded-lg border border-neutral-300 py-3.5 text-base font-medium dark:border-neutral-700"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          disabled={enviando || valorCentavos === 0 || !categoriaId}
+          className="flex-1 rounded-lg bg-neutral-900 py-3.5 text-base font-semibold text-white disabled:opacity-40 dark:bg-neutral-100 dark:text-neutral-900"
+        >
+          {enviando ? "Salvando…" : "Salvar alterações"}
+        </button>
+      </div>
     </form>
   );
 }
