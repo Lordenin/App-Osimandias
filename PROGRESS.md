@@ -51,11 +51,12 @@
 - [ ] **Pendente do usuário**: validar contra o Supabase real
 
 ## Fase 7 — Dashboard
-- [ ] Saldo do mês (entradas realizadas − saídas realizadas)
-- [ ] Gráfico de barras (gasto vs. orçamento por categoria)
-- [ ] Gráfico de pizza (distribuição de gastos)
-- [ ] Card "Previsto" (pendentes a receber/pagar)
-- [ ] Commit: "Dashboard e gráficos"
+- [x] Saldo do mês (entradas realizadas − saídas realizadas)
+- [x] Gráfico de barras (gasto vs. orçamento por categoria)
+- [x] Gráfico de pizza (distribuição de gastos)
+- [x] Card "Previsto" (pendentes a receber/pagar)
+- [x] Commit: "Dashboard e gráficos"
+- [ ] **Pendente do usuário**: validar contra o Supabase real
 
 ## Fase 8 — PWA + Deploy
 - [ ] `manifest.json` + ícones

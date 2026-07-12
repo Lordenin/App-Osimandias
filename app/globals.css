@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+:root {
+  --chart-surface: #fcfcfb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --chart-surface: #1a1a19;
+  }
+}

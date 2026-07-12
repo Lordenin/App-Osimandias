@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { formatarMesAno, mesAnterior, mesSeguinte } from "@/lib/data";
+import { SeletorMes } from "@/components/SeletorMes";
 import type { Categoria } from "@/components/GradeCategorias";
 
 export function FiltrosLancamentos({
@@ -31,25 +31,7 @@ export function FiltrosLancamentos({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex items-center justify-between">
-        <button
-          type="button"
-          aria-label="Mês anterior"
-          onClick={() => irPara({ mes: mesAnterior(mes) })}
-          className="rounded-lg px-3 py-1.5 text-lg active:bg-neutral-100 dark:active:bg-neutral-900"
-        >
-          ‹
-        </button>
-        <span className="font-medium">{formatarMesAno(mes)}</span>
-        <button
-          type="button"
-          aria-label="Próximo mês"
-          onClick={() => irPara({ mes: mesSeguinte(mes) })}
-          className="rounded-lg px-3 py-1.5 text-lg active:bg-neutral-100 dark:active:bg-neutral-900"
-        >
-          ›
-        </button>
-      </div>
+      <SeletorMes mes={mes} aoMudar={(novoMes) => irPara({ mes: novoMes })} />
 
       <div className="flex gap-2">
         <select

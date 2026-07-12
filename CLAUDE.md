@@ -13,7 +13,7 @@ máxima: fricção zero ao lançar um gasto do dia a dia.
 - **Supabase** (Postgres + Auth + Row Level Security) — free tier.
 - **Vercel** para deploy — free tier.
 - **PWA**: manifest + service worker (Fase 8).
-- **Recharts** para gráficos (Fase 7).
+- **Recharts** para gráficos.
 - Sem Redux/Zustand — só React state + Server Components/Server Actions.
 - Não adicionar dependências fora dessa lista sem perguntar ao usuário antes.
 
@@ -48,7 +48,7 @@ app/
   (app)/              # rotas autenticadas: layout com header + bottom nav
     page.tsx           # Novo lançamento (Fase 4)
     actions.ts          # Server Actions: sair, criarLancamento
-    dashboard/          # Fase 7
+    dashboard/          # saldo, gráficos (Recharts) e "Previsto"
     lancamentos/         # lista, filtros, editar, excluir, marcar como pago
       actions.ts          # Server Actions: excluir, marcarComoPago, atualizar
       [id]/editar/          # tela de edição
@@ -164,5 +164,15 @@ Ver `PROGRESS.md` para o detalhamento das fases. Resumo:
   `<input type="color">` pra cor, orçamento mensal só aparece com tipo
   saída, checkbox "ativa" pra desativar sem perder o histórico). Server
   Actions em `app/(app)/categorias/actions.ts`.
-- ⬜ Fase 7 — Dashboard e gráficos
+- ✅ **Fase 7 — Dashboard**: `app/(app)/dashboard/page.tsx` busca lançamentos do
+  mês (`?mes=`, navegação via `FiltroMesDashboard`/`SeletorMes`, compartilhado
+  com Lançamentos) e categorias de saída com orçamento definido. `CardSaldo`
+  mostra o saldo (entradas − saídas realizadas) como número em destaque.
+  `GraficoOrcamento` (Recharts, barras horizontais) compara gasto x orçamento
+  por categoria com cor por severidade (verde/âmbar/vermelho — status, não
+  identidade da categoria). `GraficoDistribuicao` (Recharts, rosca) usa a cor
+  própria de cada categoria (consistente com o resto do app), com legenda e
+  total no centro; categorias além da 5ª somam em "Outros" pra não estourar
+  o limite de fatias legíveis. `CardPrevisto` lista pendentes agrupados em "A
+  receber"/"A pagar". Sem Server Actions nesta fase (só leitura).
 - ⬜ Fase 8 — PWA + deploy na Vercel
