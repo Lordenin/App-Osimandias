@@ -1,10 +1,16 @@
-export default function Home() {
+import { createClient } from "@/lib/supabase/server";
+import { NovoLancamentoForm } from "@/components/NovoLancamentoForm";
+import { hojeSaoPaulo } from "@/lib/data";
+
+export default async function Home() {
+  const supabase = await createClient();
+  const { data: categorias } = await supabase
+    .from("categorias")
+    .select("id, nome, tipo, cor, icone")
+    .eq("ativa", true)
+    .order("nome");
+
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-2 p-6 text-center">
-      <h1 className="text-2xl font-semibold">Novo lançamento</h1>
-      <p className="text-neutral-500 dark:text-neutral-400">
-        Chega na Fase 4.
-      </p>
-    </main>
+    <NovoLancamentoForm categorias={categorias ?? []} hoje={hojeSaoPaulo()} />
   );
 }

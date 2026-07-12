@@ -56,6 +56,8 @@ app/
   auth/callback/        # troca o "code" do e-mail por sessão (Supabase)
   icon.tsx             # favicon gerado via next/og
 components/            # componentes React reutilizáveis (ex: BottomNav)
+lib/format.ts           # formatarMoeda() — sempre usar pra exibir valores em R$
+lib/data.ts             # hojeSaoPaulo() — "hoje" no fuso America/Sao_Paulo
 lib/supabase/           # clientes Supabase (browser, server, proxy)
 supabase/migrations/    # migrations SQL versionadas
 proxy.ts                # substitui "middleware.ts" no Next 16; protege rotas
@@ -133,8 +135,13 @@ Ver `PROGRESS.md` para o detalhamento das fases. Resumo:
   fixa (Novo/Dashboard/Lançamentos/Categorias — todas placeholder ainda).
   Requer `NEXT_PUBLIC_SUPABASE_URL`/`NEXT_PUBLIC_SUPABASE_ANON_KEY` reais em
   `.env.local` para funcionar (sem eles a app derruba a request de propósito).
-- ⬜ Fase 4 — Tela de Novo Lançamento
-- ⬜ Fase 4 — Tela de Novo Lançamento
+- ✅ **Fase 4 — Novo Lançamento**: `app/(app)/page.tsx` busca as categorias do
+  household (Server Component) e passa para `components/NovoLancamentoForm.tsx`
+  (Client Component): teclado numérico estilo calculadora (dígitos formam
+  centavos), toggle Entrada/Saída, grid de categorias filtrada por tipo,
+  descrição opcional, switch "é futuro/pendente" revelando a data prevista.
+  Server Action `criarLancamento` em `app/(app)/actions.ts` grava no Supabase
+  e o formulário reseta (via remount por `key`) após salvar com sucesso.
 - ⬜ Fase 5 — Tela de Lançamentos
 - ⬜ Fase 6 — Categorias e orçamentos
 - ⬜ Fase 7 — Dashboard e gráficos

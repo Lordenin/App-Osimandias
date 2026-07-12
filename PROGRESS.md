@@ -27,11 +27,13 @@
       Supabase (Fase 2) e validar o login com os dois usuários de verdade
 
 ## Fase 4 — Novo Lançamento (tela principal)
-- [ ] Teclado numérico grande, valor em destaque, toggle Entrada/Saída
-- [ ] Grid de categorias tocáveis (emoji), data padrão = hoje, descrição opcional
-- [ ] Switch "é futuro/pendente" → campo data prevista
-- [ ] Server Action para gravar lançamento
-- [ ] Commit: "Tela de novo lançamento"
+- [x] Teclado numérico grande, valor em destaque, toggle Entrada/Saída
+- [x] Grid de categorias tocáveis (emoji), data padrão = hoje, descrição opcional
+- [x] Switch "é futuro/pendente" → campo data prevista
+- [x] Server Action para gravar lançamento
+- [x] Commit: "Tela de novo lançamento"
+- [ ] **Pendente do usuário**: validar o salvamento de verdade contra o
+      Supabase real (Fases 2 e 3 precisam estar aplicadas com `.env.local`)
 
 ## Fase 5 — Lançamentos (lista)
 - [ ] Lista do mês, navegação entre meses, filtro por tipo/categoria
