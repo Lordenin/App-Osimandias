@@ -112,7 +112,10 @@ Ver `PROGRESS.md` para o detalhamento das fases. Resumo:
 
 - ✅ **Fase 1 — Setup**: projeto Next.js + TS + Tailwind criado, estrutura de
   pastas, `CLAUDE.md`, `PROGRESS.md`, `.env.example`. Build e lint limpos.
-- ⬜ Fase 2 — Supabase (migrations, RLS, seed de categorias)
+- ✅ **Fase 2 — Supabase**: migrations em `supabase/migrations/` (schema, RLS,
+  seed de categorias). Instruções de aplicação em `supabase/README.md`.
+  Ainda não aplicado no projeto Supabase real — depende do usuário criar o
+  projeto e rodar os passos do README.
 - ⬜ Fase 3 — Auth + layout base + navegação
 - ⬜ Fase 4 — Tela de Novo Lançamento
 - ⬜ Fase 5 — Tela de Lançamentos

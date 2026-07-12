@@ -10,11 +10,12 @@
 - [x] Commit: "Setup inicial do projeto"
 
 ## Fase 2 — Supabase (banco de dados)
-- [ ] Migrations SQL: `households`, `household_members`, `categorias`, `lancamentos`, enums
-- [ ] RLS em todas as tabelas (select/insert/update/delete explícitas)
-- [ ] Seed de categorias padrão ao criar household
-- [ ] Instruções de como aplicar as migrations no painel do Supabase
-- [ ] Commit: "Migrations, RLS e seed de categorias"
+- [x] Migrations SQL: `households`, `household_members`, `categorias`, `lancamentos`, enums
+- [x] RLS em todas as tabelas (select/insert/update/delete explícitas)
+- [x] Seed de categorias padrão ao criar household
+- [x] Instruções de como aplicar as migrations no painel do Supabase (`supabase/README.md`)
+- [x] Commit: "Migrations, RLS e seed de categorias"
+- [ ] **Pendente do usuário**: aplicar as migrations no projeto Supabase real e confirmar
 
 ## Fase 3 — Auth + layout base
 - [ ] Login (e-mail/senha) via Supabase Auth + "esqueci minha senha"
