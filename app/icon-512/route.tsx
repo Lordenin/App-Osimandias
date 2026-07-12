@@ -1,9 +1,8 @@
 import { ImageResponse } from "next/og";
 
-export const size = { width: 32, height: 32 };
-export const contentType = "image/png";
+export const dynamic = "force-static";
 
-export default function Icon() {
+export async function GET() {
   return new ImageResponse(
     (
       <div
@@ -14,8 +13,7 @@ export default function Icon() {
           alignItems: "center",
           justifyContent: "center",
           background: "#171717",
-          borderRadius: 6,
-          fontSize: 20,
+          fontSize: 260,
           fontWeight: 700,
           color: "#ffffff",
           fontFamily: "sans-serif",
@@ -24,6 +22,6 @@ export default function Icon() {
         M
       </div>
     ),
-    size,
+    { width: 512, height: 512 },
   );
 }

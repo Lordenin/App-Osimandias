@@ -34,6 +34,10 @@ npm run lint      # ESLint
 - Timezone de exibição: `America/Sao_Paulo`. Datas armazenadas em UTC no banco.
 - "Mês vigente" = mês de calendário (1º ao último dia).
 - Ícones de categoria: emoji (texto), sem biblioteca de ícones.
+- Ícones do **app** (favicon/PWA) são gerados via `next/og`, mas usam um
+  monograma "M" desenhado (não emoji): o `ImageResponse` renderiza emoji
+  buscando SVGs do Twemoji numa CDN externa, uma dependência de rede
+  frágil demais pra algo essencial como o ícone do app.
 - Dark mode: automático via `prefers-color-scheme` (sem toggle manual).
 - Mobile-first, testado em viewport de 390px. Barra de navegação inferior fixa
   com 4 itens: Novo, Dashboard, Lançamentos, Categorias.
@@ -59,12 +63,16 @@ app/
   login/               # tela de login + "esqueci minha senha"
   atualizar-senha/     # definir nova senha (fluxo de recuperação)
   auth/callback/        # troca o "code" do e-mail por sessão (Supabase)
-  icon.tsx             # favicon gerado via next/og
+  manifest.ts           # Web App Manifest (PWA)
+  icon.tsx              # favicon 32x32 (monograma "M", gerado via next/og)
+  apple-icon.tsx         # ícone 180x180 pro iOS
+  icon-192/, icon-512/    # ícones do manifest (any + maskable)
 components/            # componentes React reutilizáveis (ex: BottomNav)
 lib/format.ts           # formatarMoeda() — sempre usar pra exibir valores em R$
 lib/data.ts             # hojeSaoPaulo() — "hoje" no fuso America/Sao_Paulo
 lib/supabase/           # clientes Supabase (browser, server, proxy)
 supabase/migrations/    # migrations SQL versionadas
+public/sw.js             # service worker mínimo (sem cache de dados/HTML)
 proxy.ts                # substitui "middleware.ts" no Next 16; protege rotas
 ```
 
@@ -175,4 +183,13 @@ Ver `PROGRESS.md` para o detalhamento das fases. Resumo:
   total no centro; categorias além da 5ª somam em "Outros" pra não estourar
   o limite de fatias legíveis. `CardPrevisto` lista pendentes agrupados em "A
   receber"/"A pagar". Sem Server Actions nesta fase (só leitura).
-- ⬜ Fase 8 — PWA + deploy na Vercel
+- ✅ **Fase 8 — PWA**: `app/manifest.ts` (ícones 192/512 em `any`+`maskable`,
+  `display: standalone`, tema escuro). Ícones gerados via `next/og`
+  (`icon.tsx`, `apple-icon.tsx`, `icon-192/`, `icon-512/`) com monograma
+  "M" — ver nota em Convenções sobre por que não é emoji.
+  `public/sw.js` é um service worker mínimo (registrado por
+  `RegistrarServiceWorker` no layout raiz): só cacheia o manifest e cai
+  pro cache somente se a rede falhar de verdade — nunca cacheia HTML/dados,
+  porque saldo desatualizado seria pior que não funcionar offline. Deploy
+  na Vercel ainda não feito — passo a passo no `README.md`, só executo
+  com aviso/confirmação explícita sua.

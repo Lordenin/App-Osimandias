@@ -1,9 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { RegistrarServiceWorker } from "@/components/RegistrarServiceWorker";
 
 export const metadata: Metadata = {
   title: "Money Tracker",
   description: "Controle financeiro doméstico",
+  appleWebApp: {
+    capable: true,
+    title: "Money Tracker",
+    statusBarStyle: "default",
+  },
 };
 
 export const viewport: Viewport = {
@@ -25,6 +31,7 @@ export default function RootLayout({
     <html lang="pt-BR" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
         {children}
+        <RegistrarServiceWorker />
       </body>
     </html>
   );

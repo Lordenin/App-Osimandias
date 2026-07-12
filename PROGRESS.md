@@ -59,8 +59,10 @@
 - [ ] **Pendente do usuário**: validar contra o Supabase real
 
 ## Fase 8 — PWA + Deploy
-- [ ] `manifest.json` + ícones
-- [ ] Service worker
-- [ ] Teste de instalação Android/iOS
-- [ ] Deploy na Vercel (só com aviso/confirmação explícita do usuário)
+- [x] `manifest.ts` + ícones (192/512/maskable, apple-icon, favicon)
+- [x] Service worker (`public/sw.js`, registrado em `RegistrarServiceWorker`)
+- [ ] **Pendente do usuário**: testar a instalação de verdade no
+      Android/iOS (precisa do app rodando em HTTPS ou localhost)
+- [ ] **Pendente do usuário**: Deploy na Vercel — passo a passo no
+      `README.md`; só faço/confirmo com aviso explícito seu
 - [ ] Commit: "PWA e configuração de deploy"
