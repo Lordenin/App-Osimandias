@@ -52,7 +52,10 @@ app/
     lancamentos/         # lista, filtros, editar, excluir, marcar como pago
       actions.ts          # Server Actions: excluir, marcarComoPago, atualizar
       [id]/editar/          # tela de edição
-    categorias/           # Fase 6
+    categorias/           # CRUD e orçamentos
+      actions.ts            # Server Actions: criar, atualizar, excluir
+      nova/                  # criar categoria
+      [id]/editar/            # editar categoria
   login/               # tela de login + "esqueci minha senha"
   atualizar-senha/     # definir nova senha (fluxo de recuperação)
   auth/callback/        # troca o "code" do e-mail por sessão (Supabase)
@@ -153,6 +156,13 @@ Ver `PROGRESS.md` para o detalhamento das fases. Resumo:
   Editar abre `/lancamentos/[id]/editar`, que reaproveita `GradeCategorias`
   (extraído do formulário de novo lançamento) num formulário pré-preenchido.
   Server Actions em `app/(app)/lancamentos/actions.ts`.
-- ⬜ Fase 6 — Categorias e orçamentos
+- ✅ **Fase 6 — Categorias e orçamentos**: `app/(app)/categorias/page.tsx` lista
+  por tipo (`?tipo=saida|entrada`, seletor em `SeletorTipoCategoria`), cada
+  categoria num card (`ListaCategorias`) com cor, emoji, orçamento (se
+  saída) e badge "Inativa". Criar (`/categorias/nova`) e editar
+  (`/categorias/[id]/editar`) usam o mesmo `CategoriaForm` (nome, emoji,
+  `<input type="color">` pra cor, orçamento mensal só aparece com tipo
+  saída, checkbox "ativa" pra desativar sem perder o histórico). Server
+  Actions em `app/(app)/categorias/actions.ts`.
 - ⬜ Fase 7 — Dashboard e gráficos
 - ⬜ Fase 8 — PWA + deploy na Vercel

@@ -45,9 +45,10 @@
       certo com dados de verdade)
 
 ## Fase 6 — Categorias e orçamentos
-- [ ] CRUD de categorias (nome, cor, emoji)
-- [ ] Orçamento mensal (apenas categorias de saída)
-- [ ] Commit: "CRUD de categorias e orçamentos"
+- [x] CRUD de categorias (nome, cor, emoji)
+- [x] Orçamento mensal (apenas categorias de saída)
+- [x] Commit: "CRUD de categorias e orçamentos"
+- [ ] **Pendente do usuário**: validar contra o Supabase real
 
 ## Fase 7 — Dashboard
 - [ ] Saldo do mês (entradas realizadas − saídas realizadas)
