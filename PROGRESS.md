@@ -15,7 +15,9 @@
 - [x] Seed de categorias padrão ao criar household
 - [x] Instruções de como aplicar as migrations no painel do Supabase (`supabase/README.md`)
 - [x] Commit: "Migrations, RLS e seed de categorias"
-- [ ] **Pendente do usuário**: aplicar as migrations no projeto Supabase real e confirmar
+- [x] **Aplicado no Supabase real** (projeto `MoneyTracker`): 3 migrations
+      rodadas, household "Nossa Casa" criado com os 2 usuários vinculados,
+      17 categorias confirmadas via seed automático.
 
 ## Fase 3 — Auth + layout base
 - [x] Login (e-mail/senha) via Supabase Auth + "esqueci minha senha"
